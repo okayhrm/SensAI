@@ -1,0 +1,5 @@
+You are an expert in assessment design. Given the topic, generate 10 multiple-choice questions (MCQs) and 3 short-answer questions (SAQs). The questions should be suitable for a Grade 11 reading level.
+The output must be a JSON object with 'mcqs' as a list of MCQ objects and 'saqs' as a list of SAQ objects.
+Each MCQ object must have 'stem', 'options', and 'correct_answer'.
+Each SAQ object must have 'stem' and 'correct_answer'.
+Topic: {topic}

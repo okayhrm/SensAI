@@ -1,0 +1,558 @@
+Metadata-Version: 2.4
+Name: codecov-cli
+Version: 10.4.0
+Summary: Codecov Command Line Interface
+Author-email: Tom Hu <thomas.hu@sentry.io>
+Maintainer-email: Codecov Support <support@codecov.io>
+License:                                  Apache License
+                                   Version 2.0, January 2004
+                                http://www.apache.org/licenses/
+        
+           TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+        
+           1. Definitions.
+        
+              "License" shall mean the terms and conditions for use, reproduction,
+              and distribution as defined by Sections 1 through 9 of this document.
+        
+              "Licensor" shall mean the copyright owner or entity authorized by
+              the copyright owner that is granting the License.
+        
+              "Legal Entity" shall mean the union of the acting entity and all
+              other entities that control, are controlled by, or are under common
+              control with that entity. For the purposes of this definition,
+              "control" means (i) the power, direct or indirect, to cause the
+              direction or management of such entity, whether by contract or
+              otherwise, or (ii) ownership of fifty percent (50%) or more of the
+              outstanding shares, or (iii) beneficial ownership of such entity.
+        
+              "You" (or "Your") shall mean an individual or Legal Entity
+              exercising permissions granted by this License.
+        
+              "Source" form shall mean the preferred form for making modifications,
+              including but not limited to software source code, documentation
+              source, and configuration files.
+        
+              "Object" form shall mean any form resulting from mechanical
+              transformation or translation of a Source form, including but
+              not limited to compiled object code, generated documentation,
+              and conversions to other media types.
+        
+              "Work" shall mean the work of authorship, whether in Source or
+              Object form, made available under the License, as indicated by a
+              copyright notice that is included in or attached to the work
+              (an example is provided in the Appendix below).
+        
+              "Derivative Works" shall mean any work, whether in Source or Object
+              form, that is based on (or derived from) the Work and for which the
+              editorial revisions, annotations, elaborations, or other modifications
+              represent, as a whole, an original work of authorship. For the purposes
+              of this License, Derivative Works shall not include works that remain
+              separable from, or merely link (or bind by name) to the interfaces of,
+              the Work and Derivative Works thereof.
+        
+              "Contribution" shall mean any work of authorship, including
+              the original version of the Work and any modifications or additions
+              to that Work or Derivative Works thereof, that is intentionally
+              submitted to Licensor for inclusion in the Work by the copyright owner
+              or by an individual or Legal Entity authorized to submit on behalf of
+              the copyright owner. For the purposes of this definition, "submitted"
+              means any form of electronic, verbal, or written communication sent
+              to the Licensor or its representatives, including but not limited to
+              communication on electronic mailing lists, source code control systems,
+              and issue tracking systems that are managed by, or on behalf of, the
+              Licensor for the purpose of discussing and improving the Work, but
+              excluding communication that is conspicuously marked or otherwise
+              designated in writing by the copyright owner as "Not a Contribution."
+        
+              "Contributor" shall mean Licensor and any individual or Legal Entity
+              on behalf of whom a Contribution has been received by Licensor and
+              subsequently incorporated within the Work.
+        
+           2. Grant of Copyright License. Subject to the terms and conditions of
+              this License, each Contributor hereby grants to You a perpetual,
+              worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+              copyright license to reproduce, prepare Derivative Works of,
+              publicly display, publicly perform, sublicense, and distribute the
+              Work and such Derivative Works in Source or Object form.
+        
+           3. Grant of Patent License. Subject to the terms and conditions of
+              this License, each Contributor hereby grants to You a perpetual,
+              worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+              (except as stated in this section) patent license to make, have made,
+              use, offer to sell, sell, import, and otherwise transfer the Work,
+              where such license applies only to those patent claims licensable
+              by such Contributor that are necessarily infringed by their
+              Contribution(s) alone or by combination of their Contribution(s)
+              with the Work to which such Contribution(s) was submitted. If You
+              institute patent litigation against any entity (including a
+              cross-claim or counterclaim in a lawsuit) alleging that the Work
+              or a Contribution incorporated within the Work constitutes direct
+              or contributory patent infringement, then any patent licenses
+              granted to You under this License for that Work shall terminate
+              as of the date such litigation is filed.
+        
+           4. Redistribution. You may reproduce and distribute copies of the
+              Work or Derivative Works thereof in any medium, with or without
+              modifications, and in Source or Object form, provided that You
+              meet the following conditions:
+        
+              (a) You must give any other recipients of the Work or
+                  Derivative Works a copy of this License; and
+        
+              (b) You must cause any modified files to carry prominent notices
+                  stating that You changed the files; and
+        
+              (c) You must retain, in the Source form of any Derivative Works
+                  that You distribute, all copyright, patent, trademark, and
+                  attribution notices from the Source form of the Work,
+                  excluding those notices that do not pertain to any part of
+                  the Derivative Works; and
+        
+              (d) If the Work includes a "NOTICE" text file as part of its
+                  distribution, then any Derivative Works that You distribute must
+                  include a readable copy of the attribution notices contained
+                  within such NOTICE file, excluding those notices that do not
+                  pertain to any part of the Derivative Works, in at least one
+                  of the following places: within a NOTICE text file distributed
+                  as part of the Derivative Works; within the Source form or
+                  documentation, if provided along with the Derivative Works; or,
+                  within a display generated by the Derivative Works, if and
+                  wherever such third-party notices normally appear. The contents
+                  of the NOTICE file are for informational purposes only and
+                  do not modify the License. You may add Your own attribution
+                  notices within Derivative Works that You distribute, alongside
+                  or as an addendum to the NOTICE text from the Work, provided
+                  that such additional attribution notices cannot be construed
+                  as modifying the License.
+        
+              You may add Your own copyright statement to Your modifications and
+              may provide additional or different license terms and conditions
+              for use, reproduction, or distribution of Your modifications, or
+              for any such Derivative Works as a whole, provided Your use,
+              reproduction, and distribution of the Work otherwise complies with
+              the conditions stated in this License.
+        
+           5. Submission of Contributions. Unless You explicitly state otherwise,
+              any Contribution intentionally submitted for inclusion in the Work
+              by You to the Licensor shall be under the terms and conditions of
+              this License, without any additional terms or conditions.
+              Notwithstanding the above, nothing herein shall supersede or modify
+              the terms of any separate license agreement you may have executed
+              with Licensor regarding such Contributions.
+        
+           6. Trademarks. This License does not grant permission to use the trade
+              names, trademarks, service marks, or product names of the Licensor,
+              except as required for reasonable and customary use in describing the
+              origin of the Work and reproducing the content of the NOTICE file.
+        
+           7. Disclaimer of Warranty. Unless required by applicable law or
+              agreed to in writing, Licensor provides the Work (and each
+              Contributor provides its Contributions) on an "AS IS" BASIS,
+              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+              implied, including, without limitation, any warranties or conditions
+              of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+              PARTICULAR PURPOSE. You are solely responsible for determining the
+              appropriateness of using or redistributing the Work and assume any
+              risks associated with Your exercise of permissions under this License.
+        
+           8. Limitation of Liability. In no event and under no legal theory,
+              whether in tort (including negligence), contract, or otherwise,
+              unless required by applicable law (such as deliberate and grossly
+              negligent acts) or agreed to in writing, shall any Contributor be
+              liable to You for damages, including any direct, indirect, special,
+              incidental, or consequential damages of any character arising as a
+              result of this License or out of the use or inability to use the
+              Work (including but not limited to damages for loss of goodwill,
+              work stoppage, computer failure or malfunction, or any and all
+              other commercial damages or losses), even if such Contributor
+              has been advised of the possibility of such damages.
+        
+           9. Accepting Warranty or Additional Liability. While redistributing
+              the Work or Derivative Works thereof, You may choose to offer,
+              and charge a fee for, acceptance of support, warranty, indemnity,
+              or other liability obligations and/or rights consistent with this
+              License. However, in accepting such obligations, You may act only
+              on Your own behalf and on Your sole responsibility, not on behalf
+              of any other Contributor, and only if You agree to indemnify,
+              defend, and hold each Contributor harmless for any liability
+              incurred by, or claims asserted against, such Contributor by reason
+              of your accepting any such warranty or additional liability.
+        
+           END OF TERMS AND CONDITIONS
+        
+           APPENDIX: How to apply the Apache License to your work.
+        
+              To apply the Apache License to your work, attach the following
+              boilerplate notice, with the fields enclosed by brackets "[]"
+              replaced with your own identifying information. (Don't include
+              the brackets!)  The text should be enclosed in the appropriate
+              comment syntax for the file format. We also recommend that a
+              file or class name and description of purpose be included on the
+              same "printed page" as the copyright notice for easier
+              identification within third-party archives.
+        
+           Copyright [yyyy] [name of copyright owner]
+        
+           Licensed under the Apache License, Version 2.0 (the "License");
+           you may not use this file except in compliance with the License.
+           You may obtain a copy of the License at
+        
+               http://www.apache.org/licenses/LICENSE-2.0
+        
+           Unless required by applicable law or agreed to in writing, software
+           distributed under the License is distributed on an "AS IS" BASIS,
+           WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+           See the License for the specific language governing permissions and
+           limitations under the License.
+        
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click==8.*
+Requires-Dist: httpx==0.27.*
+Requires-Dist: ijson==3.*
+Requires-Dist: pyyaml==6.*
+Requires-Dist: regex
+Requires-Dist: responses==0.21.*
+Requires-Dist: sentry-sdk>=2.20.0
+Requires-Dist: test-results-parser==0.5.4
+Requires-Dist: tree-sitter==0.20.*
+Requires-Dist: wrapt>=1.17.2
+Dynamic: license-file
+
+# CodecovCLI
+
+[![codecov](https://codecov.io/gh/codecov/codecov-cli/branch/master/graph/badge.svg?token=jN0CICuA6Z)](https://codecov.io/gh/codecov/codecov-cli)
+[![Build-Test-Upload](https://github.com/codecov/codecov-cli/actions/workflows/push_flow.yml/badge.svg)](https://github.com/codecov/codecov-cli/actions/workflows/push_flow.yml)
+
+CodecovCLI is a new way for users to interact with Codecov directly from the user’s terminal or CI platform. Many Codecov features that require the user’s interference can be done via the codecovCLI. It saves commits, creates reports, uploads coverage and has many more features.
+
+- [CodecovCLI](#codecovcli)
+- [Installing](#installing)
+  - [Using PIP](#using-pip)
+  - [As a Binary](#as-a-binary)
+    - [Integrity Checking the Binary](#integrity-checking-the-binary)
+- [How to Upload to Codecov](#how-to-upload-to-codecov)
+  - [How to Get an Upload Token](#how-to-get-an-upload-token)
+- [Usage](#usage)
+- [Codecov-cli Commands](#codecov-cli-commands)
+  - [create-commit](#create-commit)
+  - [create-report](#create-report)
+  - [do-upload](#do-upload)
+  - [create-report-results](#create-report-results)
+  - [get-report-results](#get-report-results)
+  - [pr-base-picking](#pr-base-picking)
+  - [send-notifications](#send-notifications)
+  - [empty-upload](#empty-upload)
+- [How to Use Local Upload](#how-to-use-local-upload)
+- [Work in Progress Features](#work-in-progress-features)
+  - [Plugin System](#plugin-system)
+  - [Static Analysis](#static-analysis)
+- [Contributions](#contributions)
+  - [Requirements](#requirements)
+  - [Guidelines](#guidelines)
+  - [Dependencies](#dependencies)
+- [Releases](#releases)
+
+# Installing
+
+## Using PIP
+To use codecov-cli in your local machine, or your CI workflows, you need to install it:
+
+`pip install codecov-cli`
+
+The above command will download the latest version of Codecov-cli. If you wish to use a specific version, releases can be viewed [here](https://pypi.org/project/codecov-cli/#history).
+
+Note: If you're installing in a `pyenv` environment, you may need to call `pyenv rehash` before the CLI will work.
+
+## As a Binary
+If you would like to use the CLI in an environment that does not have access to Python / PIP, you can install the CLI as a compiled binary. Linux and macOS releases can be found [here](https://cli.codecov.io/), along with SHASUMs and signatures for each released version. Binary releases are also available via [Github releases](https://github.com/codecov/codecov-cli/releases) on this repository.
+
+You can retrieve the Binary for Linux directly from your command line as follows:
+
+```
+curl -Os https://cli.codecov.io/latest/linux/codecov
+sudo chmod +x codecov
+./codecov --help
+```
+
+### Integrity Checking the Binary
+
+The binary can be integrity checked using a SHASUM256 and SHASUM256.sig file. The process for macos and Linux is identical. Linux is as follows:
+
+```
+curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import # One-time step
+curl -Os https://cli.codecov.io/latest/linux/codecov
+curl -Os https://cli.codecov.io/latest/linux/codecov.SHA256SUM
+curl -Os https://cli.codecov.io/latest/linux/codecov.SHA256SUM.sig
+
+gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
+
+shasum -a 256 -c codecov.SHA256SUM
+```
+
+For macos you will want to use the macos distributions of the binary (e.g., https://cli.codecov.io/latest/macos/codecov)
+
+
+# How to Upload to Codecov
+If desired, the CLI can be used as a replacement for our [NodeJS Binary Uploader](https://github.com/codecov/uploader). To use the CLI to upload from your CI workflow, you need to add these commands:
+
+```
+pip install codecov-cli
+codecovcli create-commit
+codecovcli create-report
+codecovcli do-upload
+```
+OR
+```
+pip install codecov-cli
+codecovcli upload-process
+```
+codecovcli upload-process is a wrapper for create-commit, create-report and do-upload.
+
+You can customize the commands with the options aligned with each command.
+
+Note that these commands will automatically search your environment for a `$CODECOV_TOKEN` environment variable and use it if found. If you do not have a repository upload token, or global upload token, stored as an environment variable, you will need to pass it into **each command manually**, like so: `-t {$CODECOV_TOKEN}`.
+
+## How to Get an Upload Token
+The following tokens are suitable for uploading:
+
+* The [Repository Upload Token](https://docs.codecov.com/docs/codecov-uploader#upload-token): Found on the settings page of your repository, also viewable on the `/new` page when setting up a repository on Codecov for the first time.
+* The [Global Upload Token](https://docs.codecov.com/docs/codecov-uploader#organization-upload-token): Found on your organization settings page (e.g., `https://app.codecov.io/account/<scm>/<org>/org-upload-token`).
+
+# Usage
+If the installation is successful, running `codecovcli --help` will output the available commands along with the different general options that can be used with them.
+
+> [!IMPORTANT]
+> For up-to-date command usage, please check the `codecovcli_commands` [file](https://github.com/codecov/codecov-cli/blob/main/codecovcli_commands)
+
+```
+Usage: codecovcli [OPTIONS] COMMAND [ARGS]...
+```
+Codecov-cli supports user input. These inputs, along with their descriptions and usage contexts, are listed in the table below:
+
+| Input  | Description | Usage |
+| :---:     |     :---:   |    :---:   |
+| `--auto-load-params-from`  | The CI/CD platform   | Optional |
+| `--codecov-yml-path` | The path for your codecov.yml  | Optional
+| `--enterprise-url` | Change the upload host (Enterprise use) | Optional
+| `--version` | Codecov-cli's version | Optional
+| `--verbose` or `-v` | Run the cli with verbose logging | Optional
+
+# Codecov-cli Commands
+| Command  | Description |
+| :---:     |     :---:   |
+| `create-commit` | Saves the commit's metadata in codecov, it's only necessary to run this once per commit
+| `create-report` | Creates an empty report in codecov with initial data e.g. report name, report's commit
+| `do-upload` | Searches for and uploads coverage data to codecov
+| `create-report-results` | Used for local upload. It tells codecov that you finished local uploading and want it to calculate the results for you to get them locally.
+| `get-report-results` | Used for local upload. It asks codecov to provide you the report results you calculated with the previous command.
+| `pr-base-picking` | Tells codecov that you want to explicitly define a base for your PR
+| `upload-process` | A wrapper for 3 commands. Create-commit, create-report and do-upload. You can use this command to upload to codecov instead of using the previously mentioned commands.
+| `send-notifications` | A command that tells Codecov that you finished uploading and you want to be sent notifications. To disable automatically sent notifications please consider adding manual_trigger to your codecov.yml, so it will look like codecov: notify: manual_trigger: true.
+>**Note**: Every command has its own different options that will be mentioned later in this doc. Codecov will try to load these options from your CI environment variables, if not, it will try to load them from git, if not found, you may need to add them manually.
+
+
+
+## create-commit
+`codecovcli create-commit [Options]`
+
+| Option  | Description | Usage
+| :---:     |     :---:   |    :---:   |
+| -C, --sha, --commit-sha | Commit SHA (with 40 chars) | Required
+|--parent-sha | SHA (with 40 chars) of what should be the parent of this commit | Optional
+|-P, --pr, --pull-request-number| Specify the pull request number manually. Used to override pre-existing CI environment variables | Optional
+|-B, --branch | Branch to which this commit belongs to | Optional
+|-r, --slug | owner/repo slug used instead of the private repo token in Self-hosted | Required
+|-t, --token | Codecov upload token | Required
+|--git-service | Git Provider. Options: github, gitlab, bitbucket, github_enterprise, gitlab_enterprise, bitbucket_server | Required
+|-h, --help | Shows usage, and command options
+
+
+## create-report
+`codecovcli create-report [OPTIONS]`
+
+| Option  | Description | Usage
+| :---:     |     :---:   |    :---:   |
+| -C, --sha, --commit-sha | Commit SHA (with 40 chars) | Required
+|-r, --slug | owner/repo slug used instead of the private repo token in Self-hosted | Required
+|-t, --token | Codecov upload token | Required
+|--git-service | Git Provider. Options: github, gitlab, bitbucket, github_enterprise, gitlab_enterprise, bitbucket_server | Required
+|--code| The code of the report. This is used in local uploading to isolate local reports from regular or cloud reports uploaded to codecov so they don't get merged. It's basically a name you give to your report e.g. local-report. | Optional
+|-h, --help | Shows usage, and command options
+
+## do-upload
+`codecovcli do-upload [OPTIONS]`
+
+| Option  | Description | Usage
+| :---:     |     :---:   |    :---:   |
+|-C, --sha, --commit-sha|    Commit SHA (with 40 chars) | Required
+|--report-code | The code of the report defined when creating the report. If unsure, leave default | Optional
+|--network-root-folder |      Root folder from which to consider paths on the network section  default: (Current working directory) | Optional
+|-s, --dir, --coverage-files-search-root-folder | Folder where to search for coverage files default: (Current Working Directory) | Optional
+|--exclude, --coverage-files-search-exclude-folder | Folders to exclude from search | Optional
+|-f, --file, --coverage-files-search-direct-file | Explicit files to upload | Optional
+|--recurse-submodules | Whether to enumerate files inside of submodules for path-fixing purposes. Off by default. | Optional
+|--disable-search | Disable search for coverage files. This is helpful when specifying what files you want to upload with the --file option.| Optional
+|-b, --build, --build-code | Specify the build number manually | Optional
+|--build-url | The URL of the build where this is running | Optional
+|--job-code | The job code for the CI run | Optional
+|-t, --token | Codecov upload token | Required
+|-n, --name | Custom defined name of the upload. Visible in Codecov UI | Optional
+|-B, --branch | Branch to which this commit belongs to | Optional
+|-r, --slug | owner/repo slug | Required
+|-P, --pr, --pull-request-number | Specify the pull request number manually. Used to override pre-existing CI environment variables | Optional
+|-e, --env, --env-var | Specify environment variables to be included with this build. | Optional
+|-F, --flag | Flag the upload to group coverage metrics. Multiple flags allowed. | Optional
+|--plugin | plugins to run. Options: xcode, gcov, pycoverage. The default behavior runs them all. | Optional
+|-Z, --fail-on-error | Exit with non-zero code in case of error uploading.|Optional
+|-d, --dry-run | Don't upload files to Codecov | Optional
+|--legacy, --use-legacy-uploader | Use the legacy upload endpoint | Optional
+|--git-service | Git Provider. Options: github, gitlab, bitbucket, github_enterprise, gitlab_enterprise, bitbucket_server | Required
+|-h, --help | Shows usage, and command options
+
+## create-report-results
+`codecovcli create-report-results [OPTIONS]`
+
+| Option  | Description | Usage
+| :---:     |     :---:   |    :---:   |
+|--commit-sha | Commit SHA (with 40 chars) | Required
+|--code | The code of the report. If unsure, leave default | Required
+|--slug | owner/repo slug | Required
+|--git-service | Git provider. Options: github, gitlab, bitbucket, github_enterprise, gitlab_enterprise, bitbucket_server | Optional
+|-t, --token | Codecov upload token | Required
+|-h, --help | Shows usage, and command options
+
+## get-report-results
+`codecovcli get-report-results [OPTIONS]`
+
+| Option  | Description | Usage
+| :---:     |     :---:   |    :---:   |
+|--commit-sha | Commit SHA (with 40 chars) | Required
+|--code | The code of the report. If unsure, leave default | Required
+|--slug | owner/repo slug | Required
+|--git-service | Git provider. Options: github, gitlab, bitbucket, github_enterprise, gitlab_enterprise, bitbucket_server | Optional
+|-t, --token | Codecov upload token | Required
+|-h, --help | Shows usage, and command options
+
+## pr-base-picking
+`codecovcli pr-base-picking [OPTIONS]`
+
+| Option  | Description | Usage
+| :---:     |     :---:   |    :---:   |
+|--base-sha | Base commit SHA (with 40 chars) | Required
+|--pr  | Pull Request id to associate commit with | Required
+|--slug | owner/repo slug | Required
+|-t, --token| Codecov upload token | Required
+|--service | Git provider. Options: github, gitlab, bitbucket, github_enterprise, gitlab_enterprise, bitbucket_server | Optional
+|-h, --help | Shows usage, and command options
+
+## send-notifications
+`codecovcli send-notifications [OPTIONS]`
+
+| Option  | Description | Usage
+| :---:     |     :---:   |    :---:   |
+| -C, --sha, --commit-sha TEXT    |Commit SHA (with 40 chars) | Required
+| -r, --slug TEXT                 |owner/repo slug used instead of the private repo token in Self-hosted | Required
+| -t, --token TEXT                |Codecov upload token | Required
+| --git-service | Git provider. Options: github, gitlab, bitbucket, github_enterprise, gitlab_enterprise, bitbucket_server | Optional
+| -h,--help                      |Show this message and exit.
+
+## empty-upload
+
+Used if the changes made don't need testing, but PRs require a passing codecov status to be merged.
+This command will scan the files in the commit and send passing status checks configured if all the changed files
+are ignored by codecov (including README and configuration files)
+
+`Usage: codecovcli empty-upload [OPTIONS]`
+
+|           Options            |                                        Description                                         |  usage   |
+| :--------------------------: | :----------------------------------------------------------------------------------------: | :------: |
+| -C, --sha, --commit-sha TEXT |                                 Commit SHA (with 40 chars)                                 | Required |
+|       -t, --token TEXT       |                                    Codecov upload token                                    | Required |
+|       -r, --slug TEXT        |           owner/repo slug used instead of the private repo token in Self-hosted            | Optional |
+|           --force            |                   Always emit passing checks regardless of changed files                   | Optional |
+|     -Z, --fail-on-error      |                          Exit with non-zero code in case of error                          | Optional |
+|        --git-service         | Options: github, gitlab, bitbucket, github_enterprise, gitlab_enterprise, bitbucket_server | Optional |
+|          -h, --help          |                                Show this message and exit.                                 | Optional |
+
+# How to Use Local Upload
+
+The CLI also supports "dry run" local uploading. This is useful if you prefer to see Codecov status checks and coverage reporting locally, in your terminal, as opposed to opening a PR and waiting for your full CI to run. Local uploads do not interfere with regular uploads made from your CI for any given commit / Pull Request.
+
+Local Upload is accomplished as follows:
+
+```
+pip install codecov-cli
+codecovcli create-commit
+codecovcli create-report --code <CODE>
+codecovcli do-upload --report-code <CODE>
+codecovcli create-report-results --code <CODE>
+codecovcli get-report-results --code <CODE>
+```
+
+Codecov will calculate the coverage results, and return them in your terminal, telling you whether your PR will fail or pass the coverage check.
+
+Note: In order for Local Upload to work, it must be used against a commit on the origin repository. Local Upload does not work for arbitrary diffs or uncommitted changes on your local machine.
+
+# Work in Progress Features
+
+The following features are somewhat implemented in code, but are not yet meant for use. These features will be documented once they are fully implemented in the CLI.
+
+## Plugin System
+
+To provide extensibility to some of its commands, the CLI makes use of a plugin system. For most cases, the default commands are sufficient. But in some cases, having some custom logic specific to your use case can be beneficial. Note that full documentation of the plugin system is pending, as the feature is still heavily a work in progress.
+
+## Static Analysis
+
+The CLI can perform basic static analysis on Python code today. This static analysis is meant to power more future looking Codecov features and, as such, is not required or in active use today. As more functionality dependent on static analysis becomes available for use, we will document static analysis in detail here.
+
+# Contributions
+
+This repository, like all of Codecov's repositories, strives to follow our general [Contributing guidelines](https://github.com/codecov/contributing). If you're considering making a contribution to this repository, we encourage review of our Contributing guidelines first.
+
+## Requirements
+
+Most of this package is a very conventional Python package. The main difference is the static the CLI's analysis module uses both git submodules and C code
+
+Before installing, one should pull the submodules with:
+
+```
+git submodule update --init
+```
+Then, install dependencies with
+```
+pip install -r requirements.txt
+python -m pip install --editable .
+```
+
+The C code shouldn't require any additional setup to get running, but depending on your environment, you may be prompted to install compilers and supporting tools. If errors are generated during installation, it is likely due to missing dependencies / tools required of the C code. In many cases, resulting error messages should be clear enough to determine what is missing and how to install it, but common errors will be collected here as they are encountered.
+
+## Guidelines
+
+There are a few guidelines when developing in this system. Some notable folders:
+
+1. `commands` - It's the folder that interacts with the caller. This is where the commands themselves should reside. These commands are not meant to do heavy lifting. They only do wiring, which is mostly parsing the input parameters.
+2. `services` - It's where the heavy logic resides. It's mostly organized by which command needs them. Commands should generally be thin wrappers around these services.
+3. `helpers` - This is meant for logic that is useful across different commands. For example, logging helpers, or the logic that searches folders.
+
+## Dependencies
+
+If external dependencies need to be added, it's important to check whether those dependencies have wheels available on PyPI with the `any` or `universal2` platform tags. If those dependencies don't have those wheels available, then they will need to built during the CI, so they will have to be added to the list of
+dependencies in the `--no-binary` flag when building the requirements for the macos release in `build_assets.yml`.
+
+# Releases
+
+The standard way to making a new release is the following:
+1)  Open a PR that increases the version number in pyproject.toml. As a rule of thumb, just add one to the micro/patch version (e.g., v0.1.6 -> v0.1.7).
+
+2) Get the up-to-date master branch locally and run the `tag.release` command from the Makefile.
+
+`$ make tag.release version=v<VERSION_NUM>`
+
+The version tag must match the regex defined on the Makefile (`tag_regex := ^v([0-9]{1,}\.){2}[0-9]{1,}([-_]\w+)?$`).
+
+>**Note**: \
+>Releases with `test` word in them are created as `draft`. \
+>Releases with `beta` word in them are created as `pre-release`.

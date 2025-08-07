@@ -15,11 +15,9 @@ if os.path.exists(env_path):
 class Settings(BaseSettings):
     google_client_id: str
     openai_api_key: str
-    s3_bucket_name: str | None = None  # only relevant when running the code remotely
-    s3_folder_name: str | None = None  # only relevant when running the code remotely
-    local_upload_folder: str = (
-        UPLOAD_FOLDER_NAME  # hardcoded variable for local file storage
-    )
+    s3_bucket_name: str | None = None
+    s3_folder_name: str | None = None
+    local_upload_folder: str = UPLOAD_FOLDER_NAME
     bugsnag_api_key: str | None = None
     env: str | None = None
     slack_user_signup_webhook_url: str | None = None
@@ -27,7 +25,17 @@ class Settings(BaseSettings):
     slack_usage_stats_webhook_url: str | None = None
     phoenix_endpoint: str | None = None
     phoenix_api_key: str | None = None
-
+    # Add the missing fields here
+    database_url: str
+    database_echo: str
+    openai_base_url: str
+    sensai_publish_api_url: str
+    sensai_publish_api_key: str
+    ai_prompt_templates_path: str = "prompts"
+    ai_model_name: str = "gpt-4o"
+    ai_review_model_name: str = "gpt-4o"
+    reading_level_api_url: str | None = None
+    duplicate_detector_api_url: str | None = None
     model_config = SettingsConfigDict(env_file=join(root_dir, ".env"))
 
 

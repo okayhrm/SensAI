@@ -476,8 +476,33 @@ async def init_db():
         cursor = await conn.cursor()
 
         if exists(sqlite_db_path):
-            if not await check_table_exists(code_drafts_table_name, cursor):
-                await create_code_drafts_table(cursor)
+            # Check and create missing tables for existing databases
+            # This ensures all tables exist before any background tasks try to access them
+            tables_to_check = [
+                (organizations_table_name, create_organizations_table),
+                (org_api_keys_table_name, create_org_api_keys_table),
+                (users_table_name, create_users_table),
+                (user_organizations_table_name, create_user_organizations_table),
+                (milestones_table_name, create_milestones_table),
+                (cohorts_table_name, create_cohort_tables),
+                (courses_table_name, create_courses_table),
+                (course_cohorts_table_name, create_course_cohorts_table),
+                (tasks_table_name, create_tasks_table),
+                (questions_table_name, create_questions_table),
+                (scorecards_table_name, create_scorecards_table),
+                (question_scorecards_table_name, create_question_scorecards_table),
+                (chat_history_table_name, create_chat_history_table),
+                (task_completions_table_name, create_task_completion_table),
+                (course_tasks_table_name, create_course_tasks_table),
+                (course_milestones_table_name, create_course_milestones_table),
+                (course_generation_jobs_table_name, create_course_generation_jobs_table),
+                (task_generation_jobs_table_name, create_task_generation_jobs_table),
+                (code_drafts_table_name, create_code_drafts_table),
+            ]
+            
+            for table_name, create_function in tables_to_check:
+                if not await check_table_exists(table_name, cursor):
+                    await create_function(cursor)
 
             await conn.commit()
             return

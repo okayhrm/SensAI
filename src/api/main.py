@@ -1,12 +1,68 @@
+import os
+import tempfile
+import random
+from collections import defaultdict
 import asyncio
-from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request, HTTPException
+from contextlib import asynccontextmanager # <-- ADDED THIS LINE
+from fastapi import APIRouter, HTTPException, Body, BackgroundTasks, FastAPI, Request
+from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
-import os
+from typing import List, Optional, Dict, Literal, AsyncGenerator
+import json
+import instructor
+import openai
+from pydantic import BaseModel, Field
+from langchain_core.output_parsers import PydanticOutputParser
 from os.path import exists
-from api.config import UPLOAD_FOLDER_NAME
+from api.config import openai_plan_to_model_name, UPLOAD_FOLDER_NAME
+from api.models import (
+    TaskAIResponseType,
+    AIChatRequest,
+    ChatResponseType,
+    TaskType,
+    GenerateCourseStructureRequest,
+    GenerateCourseJobStatus,
+    GenerateTaskJobStatus,
+    QuestionType,
+)
+from api.llm import run_llm_with_instructor, stream_llm_with_instructor
+from api.settings import settings
+from api.utils.logging import logger
+from api.utils.concurrency import async_batch_gather
+from api.websockets import get_manager, router as websocket_router
+from api.db.task import (
+    get_task_metadata,
+    get_question,
+    get_task,
+    get_scorecard,
+    create_draft_task_for_course,
+    store_task_generation_request,
+    update_task_generation_job_status,
+    get_course_task_generation_jobs_status,
+    add_generated_learning_material,
+    add_generated_quiz,
+    get_all_pending_task_generation_jobs,
+)
+from api.db.course import (
+    store_course_generation_request,
+    get_course_generation_job_details,
+    update_course_generation_job_status_and_details,
+    update_course_generation_job_status,
+    get_all_pending_course_structure_generation_jobs,
+    add_milestone_to_course,
+)
+from api.db.chat import get_question_chat_history_for_user
+from api.db.utils import construct_description_from_blocks
+from api.utils.s3 import (
+    download_file_from_s3_as_bytes,
+    get_media_upload_s3_key_from_uuid,
+)
+from api.utils.audio import prepare_audio_input_for_ai
+from api.settings import tracer
+from opentelemetry.trace import StatusCode, Status
+from openinference.instrumentation import using_attributes
 from api.routes import (
     auth,
     code,
@@ -21,32 +77,20 @@ from api.routes import (
     file,
     ai,
     scorecard,
+    sensai
 )
-from api.routes.ai import (
-    resume_pending_task_generation_jobs,
-    resume_pending_course_structure_generation_jobs,
-)
-from api.websockets import router as websocket_router
+
 from api.scheduler import scheduler
-from api.settings import settings
-import bugsnag
 from bugsnag.asgi import BugsnagMiddleware
+import bugsnag
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     scheduler.start()
-
-    # Create the uploads directory if it doesn't exist
     os.makedirs(settings.local_upload_folder, exist_ok=True)
-
-    # Add recovery logic for interrupted tasks
-    asyncio.create_task(resume_pending_task_generation_jobs())
-    asyncio.create_task(resume_pending_course_structure_generation_jobs())
-
     yield
     scheduler.shutdown()
-
 
 if settings.bugsnag_api_key:
     bugsnag.configure(
@@ -57,16 +101,13 @@ if settings.bugsnag_api_key:
         auto_capture_sessions=True,
     )
 
-
 app = FastAPI(lifespan=lifespan)
 
-# Add Bugsnag middleware if configured
 if settings.bugsnag_api_key:
     app.add_middleware(BugsnagMiddleware)
 
     @app.middleware("http")
     async def bugsnag_request_middleware(request: Request, call_next):
-        # Add request metadata to Bugsnag context
         bugsnag.configure_request(
             context=f"{request.method} {request.url.path}",
             request_data={
@@ -81,21 +122,17 @@ if settings.bugsnag_api_key:
                 },
             },
         )
-
         response = await call_next(request)
         return response
 
-
-# Add CORS middleware to allow cross-origin requests (for frontend to access backend)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Replace with your frontend URL in production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Mount the uploads folder as a static directory
 if exists(settings.local_upload_folder):
     app.mount(
         f"/{UPLOAD_FOLDER_NAME}",
@@ -117,6 +154,7 @@ app.include_router(scorecard.router, prefix="/scorecards", tags=["scorecards"])
 app.include_router(code.router, prefix="/code", tags=["code"])
 app.include_router(hva.router, prefix="/hva", tags=["hva"])
 app.include_router(websocket_router, prefix="/ws", tags=["websockets"])
+app.include_router(sensai.router, prefix="/sensai", tags=["sensai-publish"])
 
 
 @app.get("/health")

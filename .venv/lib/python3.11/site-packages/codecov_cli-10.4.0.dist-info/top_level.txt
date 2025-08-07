@@ -1,0 +1,2 @@
+codecov_cli
+staticcodecov_languages

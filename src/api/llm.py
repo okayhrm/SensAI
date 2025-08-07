@@ -3,7 +3,7 @@ import backoff
 import openai
 import instructor
 
-from openai import OpenAI
+from openai import OpenAI, AsyncOpenAI
 
 from pydantic import BaseModel
 
@@ -27,7 +27,10 @@ def is_reasoning_model(model: str) -> bool:
 
 
 def validate_openai_api_key(openai_api_key: str) -> bool:
-    client = OpenAI(api_key=openai_api_key)
+    client = OpenAI(
+        api_key=openai_api_key, 
+        base_url="https://agent.dev.hyperverge.org"
+    )
     try:
         models = client.models.list()
         model_ids = [model.id for model in models.data]
@@ -48,7 +51,12 @@ async def run_llm_with_instructor(
     response_model: BaseModel,
     max_completion_tokens: int,
 ):
-    client = instructor.from_openai(openai.AsyncOpenAI(api_key=api_key))
+    client = instructor.from_openai(
+        openai.AsyncOpenAI(
+            api_key=api_key, 
+            base_url="https://agent.dev.hyperverge.org"
+        )
+    )
 
     model_kwargs = {}
 
@@ -74,7 +82,12 @@ async def stream_llm_with_instructor(
     max_completion_tokens: int,
     **kwargs,
 ):
-    client = instructor.from_openai(openai.AsyncOpenAI(api_key=api_key))
+    client = instructor.from_openai(
+        openai.AsyncOpenAI(
+            api_key=api_key, 
+            base_url="https://agent.dev.hyperverge.org"
+        )
+    )
 
     model_kwargs = {}
 
@@ -101,7 +114,10 @@ def stream_llm_with_openai(
     messages: List,
     max_completion_tokens: int,
 ):
-    client = openai.OpenAI(api_key=api_key)
+    client = openai.OpenAI(
+        api_key=api_key, 
+        base_url="https://agent.dev.hyperverge.org"
+    )
 
     model_kwargs = {}
 

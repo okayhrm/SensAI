@@ -1,0 +1,8 @@
+You are an expert course creator. Given the topic, generate a course outline with a main title and a list of 4 to 6 sections.
+
+The output MUST be a JSON object with a single 'title' key (a string) and a single 'sections' key (a list of strings). NO other keys are allowed.
+
+Example format:
+{"title": "Introduction to Hash Tables", "sections": ["What are Hash Tables?", "Hash Functions", "Collision Resolution", "Applications of Hash Tables"]}
+
+Topic: {topic}
