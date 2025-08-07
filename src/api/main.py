@@ -3,7 +3,7 @@ import tempfile
 import random
 from collections import defaultdict
 import asyncio
-from contextlib import asynccontextmanager # <-- ADDED THIS LINE
+from contextlib import asynccontextmanager
 from fastapi import APIRouter, HTTPException, Body, BackgroundTasks, FastAPI, Request
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -29,7 +29,7 @@ from api.models import (
 )
 from api.llm import run_llm_with_instructor, stream_llm_with_instructor
 from api.settings import settings
-from api.utils.logging import logger
+from api.utils.logging import logger # Assuming this is your custom logger
 from api.utils.concurrency import async_batch_gather
 from api.websockets import get_manager, router as websocket_router
 from api.db.task import (
@@ -75,10 +75,13 @@ from api.routes import (
     milestone,
     hva,
     file,
-    ai,
+    # ai, # <-- REMOVED THIS SPECIFIC IMPORT, as we'll use the one below
     scorecard,
     sensai
 )
+
+# Import the ai router specifically from its module, allowing us to control its tag
+from api.routes import ai as ai_router_module # Renamed to avoid conflict with `ai` variable below
 
 from api.scheduler import scheduler
 from bugsnag.asgi import BugsnagMiddleware
@@ -89,6 +92,9 @@ import bugsnag
 async def lifespan(app: FastAPI):
     scheduler.start()
     os.makedirs(settings.local_upload_folder, exist_ok=True)
+    # The resume functions were removed from ai.py, so these lines are commented out
+    # asyncio.create_task(resume_pending_task_generation_jobs())
+    # asyncio.create_task(resume_pending_course_structure_generation_jobs())
     yield
     scheduler.shutdown()
 
@@ -141,7 +147,7 @@ if exists(settings.local_upload_folder):
     )
 
 app.include_router(file.router, prefix="/file", tags=["file"])
-app.include_router(ai.router, prefix="/ai", tags=["ai"])
+app.include_router(file.router, prefix="/file", tags=["file"])
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(task.router, prefix="/tasks", tags=["tasks"])
 app.include_router(chat.router, prefix="/chat", tags=["chat"])
@@ -155,8 +161,7 @@ app.include_router(code.router, prefix="/code", tags=["code"])
 app.include_router(hva.router, prefix="/hva", tags=["hva"])
 app.include_router(websocket_router, prefix="/ws", tags=["websockets"])
 app.include_router(sensai.router, prefix="/sensai", tags=["sensai-publish"])
-
-
+app.include_router(ai_router_module.router, prefix="/ai", tags=["ai-assistant"])
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}

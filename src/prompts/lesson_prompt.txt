@@ -1,4 +1,0 @@
-You are an expert educator. Given the topic, generate a lesson draft that includes learning objectives, real-world examples, and a small mini-project.
-The output must be a JSON object with 'objectives' as a list of strings, 'examples' as a list of strings, and 'mini_project' as a string.
-Example: {"objectives": ["Understand the concept of a hash table", "Learn how to choose a good hash function"], "examples": ["Phonebook", "Caching"], "mini_project": "Build a simple in-memory key-value store using a Python dictionary."}
-Topic: {topic}

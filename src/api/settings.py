@@ -32,12 +32,12 @@ class Settings(BaseSettings):
     sensai_publish_api_url: str
     sensai_publish_api_key: str
     ai_prompt_templates_path: str = "prompts"
-    ai_model_name: str = "gpt-4o"
-    ai_review_model_name: str = "gpt-4o"
+    ai_model_name: str = "openai/gpt-4o-mini"
+    ai_review_model_name: str = "openai/gpt-4o-mini"
     reading_level_api_url: str | None = None
     duplicate_detector_api_url: str | None = None
     model_config = SettingsConfigDict(env_file=join(root_dir, ".env"))
-
+    otel_sdk_disabled: str = "True"
 
 @lru_cache
 def get_settings():

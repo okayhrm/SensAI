@@ -1,31 +1,35 @@
 import logging
-from api.config import log_file_path
 
+# Get a logger instance. It's good practice to name loggers,
+# but for a simple utility, __name__ is fine.
+logger = logging.getLogger(__name__)
 
-def setup_logging(log_file_path: str):
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.INFO)
+# Set the logging level for this logger.
+# logging.DEBUG will show ALL messages (DEBUG, INFO, WARNING, ERROR, CRITICAL).
+# Use logging.INFO if you only want informational messages and above.
+logger.setLevel(logging.DEBUG)
 
-    # Add a StreamHandler to output logs to the console
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
+# Create a console handler (StreamHandler)
+# This sends log records to the console (sys.stdout or sys.stderr).
+console_handler = logging.StreamHandler()
 
-    # Add a FileHandler to write logs to app.log
-    file_handler = logging.FileHandler(log_file_path)
-    file_handler.setLevel(logging.INFO)
+# Set the level for the handler. This controls what the handler actually outputs.
+# Setting it to DEBUG means the console will show all messages passed to it.
+console_handler.setLevel(logging.DEBUG)
 
-    # Create a formatter and add it to the handlers
-    formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    )
-    console_handler.setFormatter(formatter)
-    file_handler.setFormatter(formatter)
+# Create a formatter for the log messages.
+# This defines the layout of your log messages.
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-    # Add the handlers to the logger
-    # logger.addHandler(console_handler)
-    logger.addHandler(file_handler)
+# Add the formatter to the handler.
+console_handler.setFormatter(formatter)
 
-    return logger
+# Add the handler to the logger.
+# The 'if not logger.handlers:' check prevents adding duplicate handlers
+# if the module is reloaded (e.g., by Uvicorn's --reload).
+if not logger.handlers:
+    logger.addHandler(console_handler)
 
-
-logger = setup_logging(log_file_path)
+# Optional: Disable propagation to the root logger.
+# If you don't do this, messages might be duplicated if the root logger also has handlers.
+logger.propagate = False
