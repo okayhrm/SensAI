@@ -161,7 +161,7 @@ app.include_router(code.router, prefix="/code", tags=["code"])
 app.include_router(hva.router, prefix="/hva", tags=["hva"])
 app.include_router(websocket_router, prefix="/ws", tags=["websockets"])
 app.include_router(sensai.router, prefix="/sensai", tags=["sensai-publish"])
-app.include_router(ai_router_module.router, prefix="/ai", tags=["ai-assistant"])
+app.include_router(ai_router_module.router, tags=["ai-assistant"])
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
