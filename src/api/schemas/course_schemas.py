@@ -16,6 +16,7 @@ class MCQ(BaseModel):
         description="A list of possible answers."
     )
     correct_answer: str = Field(..., description="The correct answer from the options.")
+
 # Schema for a single Short Answer Question
 class SAQ(BaseModel):
     stem: str = Field(..., description="The body of the short answer question.")
@@ -34,18 +35,43 @@ class AICourseDraft(BaseModel):
     mcqs: list[MCQ]
     saqs: list[SAQ]
 
-# Schema for the AI review feedback
+# NEW: Add these schemas for enhanced validation
+class TopicValidation(BaseModel):
+    is_educational: bool
+    is_specific: bool
+    ambiguity_flags: list[str] = Field(default_factory=list)
+    bias_flags: list[str] = Field(default_factory=list)
+    suggested_clarifications: list[str] = Field(default_factory=list)
+    topic_category: str
+
+class ContentBiasCheck(BaseModel):
+    has_bias: bool
+    bias_types: list[str] = Field(default_factory=list)
+    problematic_content: list[str] = Field(default_factory=list)
+    severity_score: int = Field(..., ge=1, le=10, description="Bias severity score from 1-10")
+
+# UPDATED: Enhanced AI review feedback (replace your existing one)
 class AIReviewFeedback(BaseModel):
     ambiguity_flags: list[str] = Field(default_factory=list)
     bias_flags: list[str] = Field(default_factory=list)
     reading_level_mismatch: str | None = None
     duplicate_flags: list[str] = Field(default_factory=list)
+    # New enhanced fields
+    overall_quality_score: int = Field(default=75, ge=0, le=100)
+    strengths: list[str] = Field(default_factory=list)
+    improvement_areas: list[str] = Field(default_factory=list)
+    bias_addressed: bool = Field(default=True)
+    inclusivity_score: int = Field(default=7, ge=1, le=10)
 
-# Schema for the full response from the AI assistant endpoint
+# UPDATED: Enhanced AI response (replace your existing one)
 class AIResponse(BaseModel):
     draft: AICourseDraft
     review: AIReviewFeedback
     publish_status: dict | None = None
+    # New fields for enhanced validation
+    topic_validation: TopicValidation | None = None
+    bias_check: ContentBiasCheck | None = None
+    warnings: list[str] = Field(default_factory=list)
 
 # This is a new schema for the SensAI publish endpoint
 class PublishResponse(BaseModel):
